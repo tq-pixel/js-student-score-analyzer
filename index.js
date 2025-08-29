@@ -1,66 +1,77 @@
-// ==========================
-// Student Score Analyzer
-// ==========================
-
-// STEP 1: Define student data
-// - Each student should be an object with a name and an array of scores.
-// - Example: { name: "Alice", scores: [78, 85, 90] }
+// Code written by T.E with minute help from D.K.
 
 const students = [
-  { name: "Alice", scores: [78, 85, 90] },
-  { name: "Bob", scores: [60, 75, 81] },
-  { name: "Charlie", scores: [92, 88, 92] },
-  // TODO: Add 2 more students for practice
+  {name: "Alice", scores: [78, 85, 90]},
+  {name: "Bob", scores: [60, 75, 81]},
+  {name: "Charlie", scores: [92, 88, 92]},
+  {name: "Damien", scores: [69, 79, 71]},
+  {name: "Edna", scores: [88, 77, 68]}
 ];
 
 
-// STEP 2: Function to calculate average of an array of numbers
-// HINT: use reduce() here
-function calculateAverage(scores) {
-  // TODO: implement average calculation
-  // Formula: (sum of all scores) / (number of scores)
+function calculateAverage() {
+  const studentAverages = students.map(student => {
+    const total = student.scores.reduce((acc, score) => { 
+      return acc + score;
+    }, 0);
+
+    const average = total / student.scores.length;
+
+    return {
+      name: student.name,
+      average: average
+    };
+  });
+  return studentAverages;
 }
 
-
-// STEP 3: Use map() to create a new array of student averages
-// HINT: Each element in the new array should be an object like:
-// { name: "Alice", average: 84.33 }
-
-const studentAverages = students.map(student => {
-  // TODO: return object with name and average
-});
+const studentAverages = calculateAverage(); 
 
 
-// STEP 4: Print each student’s name and average
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 console.log("Student Averages:");
-// HINT: use forEach() to loop through studentAverages
-// Format: Alice → 84.33
-
-
-// STEP 5: Use filter() to get only students with average > 80
-const topPerformers = studentAverages.filter(student => {
-  // TODO: return true if average > 80
+console.log("   ");
+studentAverages.forEach((student) => {
+  console.log(student.name + " → " + student.average.toFixed(2));
 });
 
 
-// STEP 6: Print the list of top performers
+const topPerformers = studentAverages.filter((student) => {
+  if (student.average > 80) {
+    return true;
+  } else {
+    return false;
+  }
+});
+
+// Stop checking my code and just run `node index.js` already!!
+
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 console.log("\nTop Performers:");
-// TODO: loop and print names
+console.log("   ");
+topPerformers.forEach((student) => {
+  console.log(student.name);
+});
 
 
-// STEP 7: Use reduce() to calculate the class average
-// HINT: sum all averages and divide by number of students
-const classAverage = studentAverages.reduce((acc, student) => {
-  // TODO: add each student’s average to accumulator
-}, 0) / studentAverages.length;
+const classTotal = studentAverages.reduce((acc, student) => {
+  return acc + student.average;
+}, 0);
 
+const classAverage = classTotal / studentAverages.length;
+
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 console.log(`\nClass Average: ${classAverage.toFixed(2)}`);
 
 
-// STEP 8 (Bonus): Find the highest scoring student
-// HINT: reduce() can help here too
 const topStudent = studentAverages.reduce((best, current) => {
-  // TODO: return the student with the higher average
+  if (current.average > best.average) {
+    return current;
+  } else {
+    return best;
+  }
 });
 
 console.log(`\nTop Student: ${topStudent.name} with an average of ${topStudent.average.toFixed(2)}`);
+
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
